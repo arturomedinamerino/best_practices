@@ -1,0 +1,88 @@
+\documentclass{article}
+%\usepackage{dirtytalk} % Includes \say control sequence
+%\usepackage{tikz}
+%\usetikzlibrary{shapes.geometric, arrows}
+
+%URLs and other hyperlinks
+\usepackage{hyperref}
+
+\title{%
+Software development best practices}
+
+\author{Arturo Medina}
+\begin{document}
+
+\maketitle{}
+\section{git workflow}
+
+\subsection{Meaningful commit messages}
+A commit message should describe exactly what has been done and why was it
+done that way. Vague or generic descriptions should be avoided. If you read the
+commits message three months after it was done, it should still be easy to
+understand.
+
+\subsection{Small commits}
+Commits should be \emph{small}. Whenever possible, a big commit should be
+divided into several smaller commits, with each of them focused on one
+particular purpose. This makes it easier to understand what is going on when reviewing a commit.
+
+In particular, commits should only include changes related to a certain issue,
+i.e. two different problems should never be solved in the same commit.
+Not doing so makes it difficult to apply the commit to other branches and
+reverting it (\verb|git-revert|), among other problems. For example, if we add a
+new function \emph{and} fix an existing
+function, we should create two distinct commits, not one.
+
+However, sometimes developers make a great deal of changes to a certain file
+before they are happy to commit such changes. Instead of commiting all those
+changes at the same time, it is possible to commit only certain changes
+by using \verb|git add --patch|. This will launch and iteractive menu that
+allows the developer to select which of the changes (hunks) will be
+commited and which not. In this manner, the changes can be distributed
+into different commits in an easy manner.
+
+
+\subsection{Rely on git to keep track of your work}
+When developing/fixing bugs, use \verb|git| to keep track of the progress that
+you are making. This will make it much easier to know what changes have you
+made and when. If something stops working, you will know exactly when and why.
+
+Use auxilar branches and commits, even if they will not be the
+final commits. Keep in mind that commits can always be moved around, modified
+and even removed, so using them has no real drawbacks.
+
+In particular, do not rely on manual backups (such as \verb|zip|(ing) your
+files), since they are more easily lost and they do not provide any useful
+information about the progress that you are making.
+
+\subsection{Get rid of whitespace}
+Always ensure that no unnecessary whitespace is being commited. For
+this purpose, it is useful to use \verb|git diff --check|, or simply
+\verb|git diff| and look for big red blocks, which is \verb|git|'s way of
+telling you that you should feel bad for what you are doing.
+
+\subsection{Editing source files}
+Whenever possible, stick to the same editor when editing source files, in order to avoid changes in
+indendation or whitespace. Agree on a configuration with your team and stick to
+it.
+
+\subsection{Summary of commands}
+\begin{itemize}
+    \item \verb|git add --patch|: Interactively choose hunks of
+        patch between the index and the work tree and add them to the index.
+        This gives the user a chance to review the difference
+       before adding modified contents to the index.
+   \item \verb|git diff --check|: Warn if changes introduce conflict markers
+       or whitespace errors.
+\end{itemize}
+
+\subsection{Recommended readings}
+This section has been inspired by the following documents. These are
+recommended readings:
+\begin{itemize}
+    \item "Commit Often, Perfect Later, Publish Once: Git Best Practices" (\url{https://sethrobertson.github.io/GitBestPractices/})
+    \item "5 Reasons for Keeping Your Git Commits as Small as You Can"
+        (\url{https://crealytics.com/blog/2010/07/09/5-reasons-keeping-git-commits-small/})
+\end{itemize}
+
+\end{document}
